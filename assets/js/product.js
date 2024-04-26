@@ -148,7 +148,7 @@ async function showItem(){
         adetAzalt();
         bindEventsAll(".addToChartBtn", "click", handleAddToCartBtn);
         // handleDialog();
-        sepetBar(urunId.urunid);
+        sepetBar();
         sepetBarClose();
 
 }

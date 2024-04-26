@@ -8,18 +8,54 @@
 </head>
 <body>
     <div class="container">
-        <form class="form">
-            <label for="title">Ürün adı:</label>
-            <input type="text" name="title" placeholder="ürün adı">
-            <label for="price">Ürün fiyatı</label>
-            <input type="text" name="price" placeholder="ürün fiyatı">
-            <button class="addBtn">ürün ekle</button>
-        </form>
+        <div class="urunler">
+            <header>
+                <div class="headerLeftSide">
+                    <a href="ecommerce.html"><img src="assets/img/logo.png" alt="logo"></a>
+                    <ul class="headerListe">
+                        <li><a href="admin.html">ADMIN</a></li>
+                        <li><a href="#">Men</a></li>
+                        <li><a href="#">Women</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="headerRightSide">
+                    <a href="#" class="logoDiv"><img src="assets/img/sepet.png" alt="sepet" class="sepet"><span class="urunSayisi" style="display: none;"></span></a>
+                    <a href="#"><img src="assets/img/avatar.png" alt="avatar" class="avatar"></a>
+                </div>
+            </header>
+            <hr>
+            <div id="mySidenav" class="sidenav">
+                <a href="#" class="closebtn">x</a>
+                <ul class="urunSepetBilgi">
+                    
+                </ul>
+            </div>
 
-        <ul id="productList">
-            
+            <form class="form" id="addProduct">
+                <div>
+                    <label for="title">Ürün adı:</label>
+                    <input type="text" name="title" placeholder="ürün adı">
+                </div>
 
-        </ul>
+                <div>
+                    <label for="price">Ürün fiyatı</label>
+                    <input type="text" name="price" placeholder="ürün fiyatı">
+                </div>
+
+                <button class="addBtn">ürün ekle</button>
+ 
+            </form>
+    
+            <ul id="productList" class="allProducts">
+                
+    
+            </ul>
+          
+
+        </div>
+        
     </div>
 
     <script src="/assets/js/admin.js"></script>

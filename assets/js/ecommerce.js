@@ -5,6 +5,7 @@ let urunId = {urunid:0};
 const allProducts = qs(".allProducts");
 const totalPrice = qs(".totalPrice");
 const addedProduct = qs(".addedProduct");
+const BASE_url = "https://dummyjson.com";
 
 function qs(selector){
     const element = document.querySelector(selector);
@@ -18,6 +19,14 @@ function bindEventsAll(selector, eventType, cbFunction){
     }
 
 }
+
+async function getItems(endpoint){
+    const request = await fetch(`${BASE_url}/${endpoint}`);
+    const response = await request.json();
+    const items = response.products;
+    return items;
+}
+
 
 if (!localStorage.getItem("cart")) {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -61,8 +70,8 @@ function showAllProducts(){
                 <p class="urunAciklama">${product.description}</p>
                 <p class="rating">Rating: ${product.rating}</p>
                 <div class="fiyat">
-                    <del class="eskiFiyat">${(product.price*100/(100-product.discountPercentage)).toFixed()}</del>
-                    <p class="yeniFiyat">${product.price}</p>
+                    <del class="eskiFiyat">${(product.price*100/(100-product.discountPercentage)).toFixed()}$</del>
+                    <p class="yeniFiyat">${product.price}$</p>
                 </div>
                 
 
@@ -82,6 +91,64 @@ function showAllProducts(){
 
     bindEventsAll(".addToCart", "click", handleAddToCartBtn);
     bindEventsAll(".urunDiv", "click", getProductPage);
+
+    sepetBar();
+    sepetBarClose();
+}
+
+
+const sepet = qs(".sepet");
+const sidenav = qs(".sidenav");
+const container = qs(".container");
+const urunSepetBilgi = qs(".urunSepetBilgi");
+
+function sepetBar(){
+    
+    sepet.addEventListener("click", function(e){
+        e.preventDefault();
+        sidenav.style.width = "250px";
+        container.style.marginRight = "300px";
+
+        addedProducts();
+
+
+    })
+}
+
+function addedProducts(){
+    checkCartStorage();
+    urunSepetBilgi.innerHTML = "";
+    for (const cartProduct of cart) {
+        urunSepetBilgi.innerHTML += `<li class="sepetListe" data-id="${urunId.urunid}">
+                                        <p class="satici">Satıcı: <span>${cartProduct.brand}</span></p>
+                                        <div class="sepetMain">
+                                            <img src="${cartProduct.images[0]}" alt="urun" class="sepetFoto">
+                                            <div class="sepetMainFooter">
+                                                <p>${cartProduct.title}</p>
+                                                <div> 
+                                                    <div class="">
+                                                        <p>adet</p>
+                                                        <span>X${cartProduct.sepetAdet}</span>
+                                                    </div>
+                                                    <div>
+                                                        <p>fiyat</p>
+                                                        <span>${cartProduct.sepetAdet*cartProduct.price}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </li>`;
+    }
+}
+
+function sepetBarClose(){
+    const closebtn = qs(".closebtn");
+    closebtn.addEventListener("click", function(e){
+        e.preventDefault();
+        sidenav.style.width = "0px";
+        container.style.marginLeft = "0px";
+    })
 }
 
 function getProductPage(){
@@ -169,7 +236,21 @@ function showCartAmount(){
 //     }
 // }
 
-function init(){
+let sayac = {sayac:1};
+
+async function init(){
+    if (localStorage.getItem("sayac")) {
+        sayac = JSON.parse(localStorage.getItem("sayac"));
+    }
+    if (sayac.sayac == 1) {
+        products = await getItems("products?limit=10"); 
+        localStorage.setItem("products", JSON.stringify(products));    
+    }
+    sayac.sayac = 0;
+
+    localStorage.setItem("sayac", JSON.stringify(sayac));
+
+    addedProducts();
     showAllProducts();
     // showCart();
     // showCartAmount();
