@@ -69,6 +69,8 @@ function getFormInfos(){
         formObj.images = ["https://cdn.dummyjson.com/product-images/4/1.jpg"];
         formObj.rating = 2;
         formObj.discountPercentage = 10;
+        formObj.brand = "Apple";
+        formObj.stock = 30;
 
         checkStorage();
 

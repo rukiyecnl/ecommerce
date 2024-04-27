@@ -137,7 +137,7 @@ async function showItem(){
 
         const urunFotolari = qs(".urunFotolari");
         const buyukResim = qs(".buyukResim");
-        buyukResim.src = product.thumbnail;
+        buyukResim.src = product.images[0];
         
         for (const image of product.images) {
             urunFotolari.innerHTML += `<img class="images" src="${image}" alt="foto1">`
@@ -265,6 +265,8 @@ function addedProducts(){
                                     </li>`;
     }
 }
+
+
 
 function sepetBarClose(){
     const closebtn = qs(".closebtn");
