@@ -3,7 +3,7 @@ const BASE_url = "https://dummyjson.com";
 const dialog = qs(".alisverisOnay");
 const urunAlani = qs(".urunAlani");
 const urunSayisi = qs(".urunSayisi");
-
+const sepetTutar = qs(".sepetTutar");
 const urunSepetBilgi = qs(".urunSepetBilgi");
 
 let clickedProductid;
@@ -12,6 +12,7 @@ let adet = 0;
 let urunId = {urunid:0};
 let products = [];
 let cart = [];
+let totalCartPrice = 0;
 
 function qs(selector){
     const element = document.querySelector(selector);
@@ -150,6 +151,7 @@ async function showItem(){
         // handleDialog();
         sepetBar();
         sepetBarClose();
+        cartAmount();
 
 }
 function chooseBigPhoto(){
@@ -205,6 +207,8 @@ function handleAddToCartBtn(){
 
     localStorage.setItem("cart", JSON.stringify(cart));
     addedProducts();
+    cartAmount();
+
     // showCart();
     // showCartAmount();
 }
@@ -243,8 +247,8 @@ function addedProducts(){
     checkCartStorage();
     urunSepetBilgi.innerHTML = "";
     for (const cartProduct of cart) {
-        urunSepetBilgi.innerHTML += `<li class="sepetListe" data-id="${urunId.urunid}">
-                                        <p class="satici">Satıcı: <span>${cartProduct.brand}</span></p>
+        urunSepetBilgi.innerHTML += `<li class="sepetListe" id="${cartProduct.id}">
+                                        <p class="satici">Satıcı: <span>${cartProduct.brand}</span> <button class="cartDeleteBtn">Sil</button></p>
                                         <div class="sepetMain">
                                             <img src="${cartProduct.images[0]}" alt="urun" class="sepetFoto">
                                             <div class="sepetMainFooter">
@@ -264,6 +268,26 @@ function addedProducts(){
                                         
                                     </li>`;
     }
+
+    bindEventsAll(".cartDeleteBtn", "click", handleCartDeleteBtn);
+}
+
+function handleCartDeleteBtn(){
+    const deletedProduct = cart.find(product => product.id == this.parentElement.parentElement.id);
+    // console.log(cart.indexOf(deletedProduct));
+
+    cart.splice(cart.indexOf(deletedProduct), 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    addedProducts();
+}
+
+
+
+function  cartAmount(){
+    checkCartStorage();
+    totalCartPrice = 0;
+    cart.forEach(product => totalCartPrice += (product.price * product.sepetAdet));
+    sepetTutar.innerHTML = `<h3 class = "sepetTutar">Sepet Tutar: ${totalCartPrice}$</h3>`;
 }
 
 

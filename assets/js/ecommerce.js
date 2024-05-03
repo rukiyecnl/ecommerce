@@ -6,6 +6,8 @@ const allProducts = qs(".allProducts");
 const totalPrice = qs(".totalPrice");
 const addedProduct = qs(".addedProduct");
 const BASE_url = "https://dummyjson.com";
+const sepetTutar = qs(".sepetTutar");
+let totalCartPrice = 0;
 
 function qs(selector){
     const element = document.querySelector(selector);
@@ -94,6 +96,7 @@ function showAllProducts(){
 
     sepetBar();
     sepetBarClose();
+    cartAmount();
 }
 
 
@@ -141,6 +144,14 @@ function addedProducts(){
                                     </li>`;
     }
 }
+
+function  cartAmount(){
+    checkCartStorage();
+    totalCartPrice = 0;
+    cart.forEach(product => totalCartPrice += (product.price * product.sepetAdet));
+    sepetTutar.innerHTML = `<h3 class = "sepetTutar">Sepet Tutar: ${totalCartPrice}$</h3>`;
+}
+
 
 function sepetBarClose(){
     const closebtn = qs(".closebtn");

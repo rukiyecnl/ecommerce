@@ -342,6 +342,9 @@ hr{
     gap: 20px;
 
 }
+.sepetTutar {
+    text-align: center;
+}
 .sepetListe {
     /* display: flex;
     justify-content: start;
@@ -383,6 +386,10 @@ hr{
     width: 70px;
     height: 70px;
     object-fit: cover;
+}
+
+.cartDeleteBtn {
+    float: right;
 }
 
 #addProduct {
